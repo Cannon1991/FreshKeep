@@ -19,7 +19,7 @@
 - [x] Show trust line icons and one-line statements: “No light needed”; “Made with clay + sand + water”; “Built in 1 day by local mason.”
 
 ## New v3: mason and materials contacts
-- [x] Add a hard-coded JavaScript contact array for Epe, Ikorodu, Badagry, and Ojo. Show only the selected LGA’s 1–2 records near the bottom before the final CTA. Epe contacts supplied: Ekemini Enang — Materials — 08063353863; Epe Mason — Mason — 08137197050. Use each supplied number for Call and WhatsApp. Keep both actions inactive for entries without a supplied number. Auto-fill the contact-specific WhatsApp message: “Hi [name], I dey for [area], I wan build the N35k FreshKeep cooler, how much?” Convert Nigerian local numbers to international country-code format for wa.me links.
+- [x] Add a hard-coded JavaScript contact array for Epe, Ikorodu, Badagry, and Ojo. Show only the selected LGA’s 1–2 records near the bottom before the final CTA. Epe contacts supplied: Ekemini Enang — Materials — 08063353863; Epe Mason — Mason — 08137197050, explicitly marked `verified: true` in app.js with a “Verified contact” badge. Use each supplied number for Call and WhatsApp. Keep both actions inactive for entries without a supplied number. Auto-fill the contact-specific WhatsApp message: “Hi [name], I dey for [area], I wan build the N35k FreshKeep cooler, how much?” Convert Nigerian local numbers to international country-code format for wa.me links.
 - [x] Show the local-provider note: “Na local mason, no be company. Call am direct.”
 - [ ] Collect and add verified mason/materials names and phone numbers for the remaining Ikorodu, Badagry, and Ojo placeholders before presenting them as real providers.
 

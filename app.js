@@ -14,7 +14,7 @@
     { produce: 'Efo', price: 3500, yesterday: 4000 }
   ];
   const LOCAL_CONTACTS = [
-    { area: 'Epe', name: 'Epe Mason', role: 'Mason', detail: 'Local mason contact', phone: '08137197050' },
+    { area: 'Epe', name: 'Epe Mason', role: 'Mason', detail: 'Local mason contact', phone: '08137197050', verified: true },
     { area: 'Epe', name: 'Ekemini Enang', role: 'Materials', detail: 'Materials contact', phone: '08063353863' },
     { area: 'Ikorodu', name: 'Mason listing pending', whatsappName: 'local mason', role: 'Mason', detail: 'Add a verified contact in app.js', phone: '' },
     { area: 'Ikorodu', name: 'Materials listing pending', whatsappName: 'local materials seller', role: 'Materials', detail: 'Add a verified contact in app.js', phone: '' },
@@ -180,7 +180,8 @@
         ? `<a class="contact-action contact-whatsapp" href="${waHref}" target="_blank" rel="noopener noreferrer">WhatsApp</a>`
         : '<button type="button" class="contact-action contact-whatsapp" aria-disabled="true" disabled title="Add a verified number in LOCAL_CONTACTS to enable WhatsApp">WhatsApp</button>';
       const icon = contact.role === 'Mason' ? '🧱' : '🛍';
-      return `<article class="contact-card"><div class="contact-card-top"><span class="contact-avatar" aria-hidden="true">${icon}</span><div><h3 class="contact-name">${contact.name}</h3><span class="contact-role">${contact.role}</span></div></div><p class="contact-detail">${contact.detail}</p><p class="contact-phone-note">${phone || 'Verified phone number not added yet.'}</p><div class="contact-actions">${callAction}${whatsappAction}</div></article>`;
+      const verifiedBadge = contact.verified ? '<span class="contact-verification">✓ Verified contact</span>' : '';
+      return `<article class="contact-card"><div class="contact-card-top"><span class="contact-avatar" aria-hidden="true">${icon}</span><div><h3 class="contact-name">${contact.name}</h3><span class="contact-role">${contact.role}</span></div></div><p class="contact-detail">${contact.detail}</p><p class="contact-phone-note">${phone || 'Verified phone number not added yet.'}</p>${verifiedBadge}<div class="contact-actions">${callAction}${whatsappAction}</div></article>`;
     }).join('');
   }
   function render() {

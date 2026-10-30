@@ -327,6 +327,7 @@ svg { display: block; }
 .contact-role { display: inline-block; margin-top: 3px; color: var(--leaf); font-size: 18px; font-weight: 750; }
 .contact-detail { min-height: 48px; margin: 10px 0 8px; color: #414b39; font-size: 18px; line-height: 1.35; }
 .contact-phone-note { margin: 0 0 9px; color: var(--muted); font-size: 18px; line-height: 1.3; }
+.contact-verification { display: inline-block; margin: 0 0 10px; padding: 4px 9px; border-radius: 999px; background: #e4f0d6; color: #235c30; font-size: 18px; font-weight: 800; }
 .contact-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .contact-action { display: flex; justify-content: center; align-items: center; min-width: 0; min-height: 48px; padding: 7px; border: 2px solid var(--forest); border-radius: 12px; background: #fff; color: var(--forest); font-size: 18px; font-weight: 800; text-align: center; text-decoration: none; }
 .contact-action.contact-whatsapp { border-color: var(--leaf); background: var(--leaf); color: #fff; }
