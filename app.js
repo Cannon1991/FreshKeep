@@ -14,8 +14,8 @@
     { produce: 'Efo', price: 3500, yesterday: 4000 }
   ];
   const LOCAL_CONTACTS = [
-    { area: 'Epe', name: 'Baba Tunde', role: 'Mason', detail: 'Builds in 1 day', phone: '' },
-    { area: 'Epe', name: 'Mama Aisha', role: 'Materials', detail: 'Sells clay blocks + sand', phone: '' },
+    { area: 'Epe', name: 'Mason listing pending', role: 'Mason', detail: 'Add a verified contact in app.js', phone: '' },
+    { area: 'Epe', name: 'Ekemini Enang', role: 'Materials', detail: 'Materials contact', phone: '08063353863' },
     { area: 'Ikorodu', name: 'Mason listing pending', whatsappName: 'local mason', role: 'Mason', detail: 'Add a verified contact in app.js', phone: '' },
     { area: 'Ikorodu', name: 'Materials listing pending', whatsappName: 'local materials seller', role: 'Materials', detail: 'Add a verified contact in app.js', phone: '' },
     { area: 'Badagry', name: 'Mason listing pending', whatsappName: 'local mason', role: 'Mason', detail: 'Add a verified contact in app.js', phone: '' },
@@ -168,15 +168,19 @@
     $('#mason-contact-list').innerHTML = contacts.map((contact) => {
       const phone = String(contact.phone || '').trim();
       const dialNumber = phone.replace(/[^\d+]/g, '');
-      const waNumber = phone.replace(/\D/g, '');
+      const digits = phone.replace(/\D/g, '');
+      const waNumber = digits.startsWith('0') ? `234${digits.slice(1)}` : digits;
       const recipient = contact.whatsappName || contact.name;
       const message = `Hi ${recipient}, I dey for ${state.location}, I wan build the N35k FreshKeep cooler, how much?`;
       const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
       const callAction = dialNumber
         ? `<a class="contact-action" href="tel:${dialNumber}">Call</a>`
         : '<button type="button" class="contact-action" aria-disabled="true" disabled title="Add a verified number in LOCAL_CONTACTS to enable calling">Call</button>';
+      const whatsappAction = waNumber
+        ? `<a class="contact-action contact-whatsapp" href="${waHref}" target="_blank" rel="noopener noreferrer">WhatsApp</a>`
+        : '<button type="button" class="contact-action contact-whatsapp" aria-disabled="true" disabled title="Add a verified number in LOCAL_CONTACTS to enable WhatsApp">WhatsApp</button>';
       const icon = contact.role === 'Mason' ? '🧱' : '🛍';
-      return `<article class="contact-card"><div class="contact-card-top"><span class="contact-avatar" aria-hidden="true">${icon}</span><div><h3 class="contact-name">${contact.name}</h3><span class="contact-role">${contact.role}</span></div></div><p class="contact-detail">${contact.detail}</p><p class="contact-phone-note">${phone || 'Verified phone number not added yet.'}</p><div class="contact-actions">${callAction}<a class="contact-action contact-whatsapp" href="${waHref}" target="_blank" rel="noopener noreferrer">WhatsApp</a></div></article>`;
+      return `<article class="contact-card"><div class="contact-card-top"><span class="contact-avatar" aria-hidden="true">${icon}</span><div><h3 class="contact-name">${contact.name}</h3><span class="contact-role">${contact.role}</span></div></div><p class="contact-detail">${contact.detail}</p><p class="contact-phone-note">${phone || 'Verified phone number not added yet.'}</p><div class="contact-actions">${callAction}${whatsappAction}</div></article>`;
     }).join('');
   }
   function render() {

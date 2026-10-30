@@ -19,9 +19,9 @@
 - [x] Show trust line icons and one-line statements: “No light needed”; “Made with clay + sand + water”; “Built in 1 day by local mason.”
 
 ## New v3: mason and materials contacts
-- [x] Add a hard-coded JavaScript contact array for Epe, Ikorodu, Badagry, and Ojo. Show only the selected LGA’s 1–2 records near the bottom before the final CTA. Epe’s example records are Baba Tunde — Mason — “Builds in 1 day” and Mama Aisha — Materials — “Sells clay blocks + sand.” Include Call and WhatsApp actions; keep Call inactive until a verified number is added. Auto-fill the contact-specific WhatsApp message: “Hi [name], I dey for [area], I wan build the N35k FreshKeep cooler, how much?”
+- [x] Add a hard-coded JavaScript contact array for Epe, Ikorodu, Badagry, and Ojo. Show only the selected LGA’s 1–2 records near the bottom before the final CTA. Epe’s supplied contact is Ekemini Enang — Materials — 08063353863; use the supplied number for Call and WhatsApp. Keep both actions inactive for entries without a supplied number. Auto-fill the contact-specific WhatsApp message: “Hi [name], I dey for [area], I wan build the N35k FreshKeep cooler, how much?” Convert Nigerian local numbers to international country-code format for wa.me links.
 - [x] Show the local-provider note: “Na local mason, no be company. Call am direct.”
-- [ ] Replace the example/pending contact entries with verified local names and phone numbers for all four LGAs before presenting them as real providers.
+- [ ] Collect and add verified mason/materials names and phone numbers for Epe and the remaining Ikorodu, Badagry, and Ojo placeholders before presenting them as real providers.
 
 ## WhatsApp, sharing, offline, and constraints
 - [x] Provide large green WhatsApp CTA “Get Building Guide on WhatsApp”; prefill a wa.me message with location, basket/bunch count, produce, and ₦35k cooler question. Do not invent a WhatsApp phone number if none is supplied.
