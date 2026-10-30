@@ -2,11 +2,27 @@
   'use strict';
   const STORAGE_KEY = 'freshkeep-last-selection-v1';
   const CROPS = {
-    Tomatoes: { normal: 2, cooler: 5 },
-    Atarodo: { normal: 3, cooler: 7 },
-    Ugwu: { normal: 1, cooler: 4 },
-    Efo: { normal: 1, cooler: 3 }
+    Tomatoes: { normal: 2, cooler: 5, unit: 'basket', plural: 'baskets' },
+    Atarodo: { normal: 3, cooler: 7, unit: 'basket', plural: 'baskets' },
+    Ugwu: { normal: 1, cooler: 4, unit: 'bunch', plural: 'bunches' },
+    Efo: { normal: 1, cooler: 3, unit: 'bunch', plural: 'bunches' }
   };
+  const MARKET_DATA = [
+    { produce: 'Tomatoes', price: 6000, yesterday: 5500 },
+    { produce: 'Atarodo', price: 9500, yesterday: 10000 },
+    { produce: 'Ugwu', price: 4000, yesterday: 3500 },
+    { produce: 'Efo', price: 3500, yesterday: 4000 }
+  ];
+  const LOCAL_CONTACTS = [
+    { area: 'Epe', name: 'Baba Tunde', role: 'Mason', detail: 'Builds in 1 day', phone: '' },
+    { area: 'Epe', name: 'Mama Aisha', role: 'Materials', detail: 'Sells clay blocks + sand', phone: '' },
+    { area: 'Ikorodu', name: 'Mason listing pending', whatsappName: 'local mason', role: 'Mason', detail: 'Add a verified contact in app.js', phone: '' },
+    { area: 'Ikorodu', name: 'Materials listing pending', whatsappName: 'local materials seller', role: 'Materials', detail: 'Add a verified contact in app.js', phone: '' },
+    { area: 'Badagry', name: 'Mason listing pending', whatsappName: 'local mason', role: 'Mason', detail: 'Add a verified contact in app.js', phone: '' },
+    { area: 'Badagry', name: 'Materials listing pending', whatsappName: 'local materials seller', role: 'Materials', detail: 'Add a verified contact in app.js', phone: '' },
+    { area: 'Ojo', name: 'Mason listing pending', whatsappName: 'local mason', role: 'Mason', detail: 'Add a verified contact in app.js', phone: '' },
+    { area: 'Ojo', name: 'Materials listing pending', whatsappName: 'local materials seller', role: 'Materials', detail: 'Add a verified contact in app.js', phone: '' }
+  ];
   const COOLER_COST = 35000;
   const state = { produce: 'Tomatoes', checkerProduce: 'Tomatoes', baskets: 8, price: 5000, location: 'Epe', language: 'PIDGIN', daysAgo: 0, reminder: null };
   const $ = (selector) => document.querySelector(selector);
@@ -53,14 +69,25 @@
     const count = Math.min(state.baskets, 8);
     holder.innerHTML = Array.from({ length: count }, () => '<svg class="basket-icon" viewBox="0 0 24 24"><path d="M3.5 9h17l-1.6 11h-13L3.5 9Z"/><path d="m7 9 5-6 5 6M7.4 12v5m4.6-5v5m4.6-5v5"/></svg>').join('');
     if (state.baskets > 8) holder.insertAdjacentHTML('beforeend', `<span>+${state.baskets - 8}</span>`);
-    $('#basket-visual-label').textContent = `${state.baskets} baskets`;
+    const info = crop();
+    $('#basket-visual-label').textContent = `${state.baskets} ${state.baskets === 1 ? info.unit : info.plural}`;
   }
   function updateWhatsApp() {
-    const message = `Hi I dey for ${state.location}. I get ${state.baskets} baskets of ${state.produce}. How I fit build the N35k cooler?`;
+    const info = crop();
+    const quantityUnit = state.baskets === 1 ? info.unit : info.plural;
+    const message = `Hi I dey for ${state.location}. I get ${state.baskets} ${quantityUnit} of ${state.produce}. How I fit build the N35k cooler?`;
     $('#whatsapp-link').href = `https://wa.me/?text=${encodeURIComponent(message)}`;
   }
   function updateCropFreshness() {
     const info = crop();
+    const quantityUnit = state.baskets === 1 ? info.unit : info.plural;
+    $('#quantity-question').textContent = `How many ${info.plural}?`;
+    $('#quantity-slider-label').textContent = `How many ${info.plural}?`;
+    $('#quantity-unit').textContent = quantityUnit;
+    $('#price-unit').textContent = info.unit;
+    $('#price-input').setAttribute('aria-label', `Price per ${info.unit} in naira`);
+    $('#minus-button').setAttribute('aria-label', `Remove one ${info.unit}`);
+    $('#plus-button').setAttribute('aria-label', `Add one ${info.unit}`);
     $('#normal-days').textContent = info.normal;
     $('#cooler-days').textContent = info.cooler;
     $('#normal-day-label').textContent = info.normal;
@@ -117,6 +144,41 @@
         : 'Add a price to estimate when savings cover the build.';
     updateWhatsApp();
   }
+  function updateMarketCards() {
+    $$('[data-market-produce]').forEach((button) => {
+      const item = MARKET_DATA.find((record) => record.produce === button.dataset.marketProduce);
+      if (!item) return;
+      const info = crop(item.produce);
+      const difference = item.price - item.yesterday;
+      const direction = difference >= 0 ? 'up' : 'down';
+      button.querySelector('.market-price').textContent = money(item.price);
+      button.querySelector('.market-unit').textContent = `per ${info.unit}`;
+      const change = button.querySelector('.market-change');
+      change.textContent = `${difference >= 0 ? '↑' : '↓'} ${money(Math.abs(difference))} vs yesterday · sample`;
+      change.classList.toggle('is-up', difference >= 0);
+      change.classList.toggle('is-down', difference < 0);
+      const selected = state.produce === item.produce && state.price === item.price;
+      button.setAttribute('aria-pressed', String(selected));
+      button.setAttribute('aria-label', `${item.produce}: ${money(item.price)} per ${info.unit}, ${direction} ${money(Math.abs(difference))} versus sample yesterday quote. Tap to use this price.`);
+    });
+  }
+  function updateContacts() {
+    $('#contact-location').textContent = state.location;
+    const contacts = LOCAL_CONTACTS.filter((contact) => contact.area === state.location);
+    $('#mason-contact-list').innerHTML = contacts.map((contact) => {
+      const phone = String(contact.phone || '').trim();
+      const dialNumber = phone.replace(/[^\d+]/g, '');
+      const waNumber = phone.replace(/\D/g, '');
+      const recipient = contact.whatsappName || contact.name;
+      const message = `Hi ${recipient}, I dey for ${state.location}, I wan build the N35k FreshKeep cooler, how much?`;
+      const waHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+      const callAction = dialNumber
+        ? `<a class="contact-action" href="tel:${dialNumber}">Call</a>`
+        : '<button type="button" class="contact-action" aria-disabled="true" disabled title="Add a verified number in LOCAL_CONTACTS to enable calling">Call</button>';
+      const icon = contact.role === 'Mason' ? '🧱' : '🛍';
+      return `<article class="contact-card"><div class="contact-card-top"><span class="contact-avatar" aria-hidden="true">${icon}</span><div><h3 class="contact-name">${contact.name}</h3><span class="contact-role">${contact.role}</span></div></div><p class="contact-detail">${contact.detail}</p><p class="contact-phone-note">${phone || 'Verified phone number not added yet.'}</p><div class="contact-actions">${callAction}<a class="contact-action contact-whatsapp" href="${waHref}" target="_blank" rel="noopener noreferrer">WhatsApp</a></div></article>`;
+    }).join('');
+  }
   function render() {
     state.baskets = clamp(Math.round(state.baskets), 1, 50);
     state.price = Math.max(0, Math.round(Number(state.price) || 0));
@@ -135,6 +197,8 @@
     });
     updateBasketIcons();
     updateCropFreshness();
+    updateMarketCards();
+    updateContacts();
     updateDaysChecker();
     updateCostAndResults();
     saveSelection();
@@ -174,6 +238,7 @@
   function drawSavingsPng() {
     const { loss, saved, season } = calculate();
     const info = crop();
+    const quantityUnit = state.baskets === 1 ? info.unit : info.plural;
     const canvas = document.createElement('canvas');
     canvas.width = 1080; canvas.height = 1280;
     const ctx = canvas.getContext('2d');
@@ -182,8 +247,8 @@
     ctx.fillStyle = '#194c2d'; ctx.beginPath(); ctx.arc(100, 90, 36, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = '#ffffff'; ctx.font = 'bold 36px system-ui, sans-serif'; ctx.fillText('FreshKeep Lagos', 160, 101);
     ctx.fillStyle = '#194c2d'; ctx.font = 'bold 48px system-ui, sans-serif'; ctx.fillText('My harvest savings', 72, 180);
-    ctx.fillStyle = '#1c2c20'; ctx.font = 'bold 34px system-ui, sans-serif'; ctx.fillText(`${state.baskets} baskets of ${state.produce}`, 72, 314);
-    ctx.font = '28px system-ui, sans-serif'; ctx.fillText(`${state.location}  ·  ${money(state.price)} per basket`, 72, 362);
+    ctx.fillStyle = '#1c2c20'; ctx.font = 'bold 34px system-ui, sans-serif'; ctx.fillText(`${state.baskets} ${quantityUnit} of ${state.produce}`, 72, 314);
+    ctx.font = '28px system-ui, sans-serif'; ctx.fillText(`${state.location}  ·  ${money(state.price)} per ${info.unit}`, 72, 362);
     roundRect(ctx, 72, 425, 936, 185, 26, '#fff0eb', '#e8b4a8');
     ctx.fillStyle = '#9f3229'; ctx.font = 'bold 30px system-ui, sans-serif'; ctx.fillText(`WITHOUT COOLER  ·  ${info.normal} DAYS`, 112, 487);
     ctx.font = 'bold 64px system-ui, sans-serif'; ctx.fillText(money(loss), 112, 565);
@@ -242,7 +307,15 @@
   function bindEvents() {
     $$('.produce-card').forEach((button) => button.addEventListener('click', () => { state.produce = button.dataset.produce; render(); }));
     $$('.checker-produce-button').forEach((button) => button.addEventListener('click', () => { state.checkerProduce = button.dataset.checkerProduce; render(); }));
-    $$('.location-pill').forEach((button) => button.addEventListener('click', () => { state.location = button.dataset.location; render(); }));
+    $$('.location-pill').forEach((button) => button.addEventListener('click', () => { state.location = button.dataset.location; render(); updateContacts(); }));
+    $$('[data-market-produce]').forEach((button) => button.addEventListener('click', () => {
+      const item = MARKET_DATA.find((record) => record.produce === button.dataset.marketProduce);
+      if (!item) return;
+      state.produce = item.produce;
+      state.price = item.price;
+      render();
+      $('#calculator-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }));
     $$('[data-language]').forEach((button) => button.addEventListener('click', () => { state.language = button.dataset.language; setKeywordWords(); saveSelection(); }));
     $('#basket-slider').addEventListener('input', (event) => setQuantity(Number(event.target.value)));
     $('#minus-button').addEventListener('click', () => setQuantity(state.baskets - 1));
@@ -267,7 +340,7 @@
     $('#share-button').addEventListener('click', shareSavings);
   }
   function start() {
-    loadSaved(); setKeywordWords(); bindEvents(); setupVoice(); render(); updateReminderStatus();
+    loadSaved(); setKeywordWords(); bindEvents(); setupVoice(); render(); updateContacts(); updateReminderStatus();
     document.addEventListener('visibilitychange', updateReminderStatus);
     window.addEventListener('pageshow', updateReminderStatus);
     if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}), { once: true });

@@ -38,7 +38,21 @@
   </header>
 
   <main class="page-wrap">
-    <section class="calculator-panel" aria-labelledby="calc-title">
+    <section class="market-section" aria-labelledby="market-title">
+      <div class="market-heading">
+        <span class="market-symbol" aria-hidden="true">₦</span>
+        <div><h2 id="market-title">Today for Mile 12 Market</h2><p>Updated today 7am. Prices from Mile 12.</p></div>
+      </div>
+      <div class="market-grid" role="group" aria-label="Today's Mile 12 market prices">
+        <button type="button" class="market-card" data-market-produce="Tomatoes" aria-pressed="false"><img src="/assets/tomatoes.webp" alt="" loading="lazy"><span class="market-card-copy"><span class="market-name">Tomatoes</span><strong class="market-price">₦6,000</strong><span class="market-unit">per basket</span><span class="market-change"></span></span></button>
+        <button type="button" class="market-card" data-market-produce="Atarodo" aria-pressed="false"><img src="/assets/atarodo.webp" alt="" loading="lazy"><span class="market-card-copy"><span class="market-name">Atarodo</span><strong class="market-price">₦9,500</strong><span class="market-unit">per basket</span><span class="market-change"></span></span></button>
+        <button type="button" class="market-card" data-market-produce="Ugwu" aria-pressed="false"><img src="/assets/ugwu.webp" alt="" loading="lazy"><span class="market-card-copy"><span class="market-name">Ugwu</span><strong class="market-price">₦4,000</strong><span class="market-unit">per bunch</span><span class="market-change"></span></span></button>
+        <button type="button" class="market-card" data-market-produce="Efo" aria-pressed="false"><img src="/assets/efo.webp" alt="" loading="lazy"><span class="market-card-copy"><span class="market-name">Efo</span><strong class="market-price">₦3,500</strong><span class="market-unit">per bunch</span><span class="market-change"></span></span></button>
+      </div>
+      <p class="market-note">Trend arrows use sample yesterday prices. Update both quotes in app.js with verified market prices.</p>
+    </section>
+
+    <section id="calculator-panel" class="calculator-panel" aria-labelledby="calc-title">
       <div class="intro-row">
         <div>
           <p class="eyebrow"><span class="sun-dot" aria-hidden="true"></span>HARVEST SAVINGS CALCULATOR</p>
@@ -71,14 +85,14 @@
       </div>
 
       <div class="form-section quantity-section">
-        <div class="section-heading"><span class="step-number">2</span><h2>How many baskets?</h2></div>
+        <div class="section-heading"><span class="step-number">2</span><h2 id="quantity-question">How many baskets?</h2></div>
         <div class="quantity-control">
           <button type="button" id="minus-button" class="stepper-button" aria-label="Remove one basket">−</button>
-          <div class="quantity-readout" aria-live="polite"><output id="basket-count">8</output><span>baskets</span></div>
+          <div class="quantity-readout" aria-live="polite"><output id="basket-count">8</output><span id="quantity-unit">baskets</span></div>
           <button type="button" id="plus-button" class="stepper-button" aria-label="Add one basket">+</button>
           <button type="button" id="mic-button" class="mic-button" aria-label="Speak basket quantity" title="Speak basket quantity" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a3.2 3.2 0 0 0 3.2-3.2V5.7a3.2 3.2 0 0 0-6.4 0v5.1A3.2 3.2 0 0 0 12 14Z"/><path d="M6.5 10.8a5.5 5.5 0 0 0 11 0M12 16.4v3.1m-3.3 0h6.6"/></svg></button>
         </div>
-        <label class="sr-only" for="basket-slider">How many baskets?</label>
+        <label class="sr-only" for="basket-slider" id="quantity-slider-label">How many baskets?</label>
         <input id="basket-slider" class="basket-slider" type="range" min="1" max="50" value="8" step="1">
         <div class="slider-ends"><span>1</span><span>50</span></div>
         <div class="basket-visual" aria-live="polite"><div class="basket-icons" id="basket-icons" aria-hidden="true"></div><span id="basket-visual-label">8 baskets</span></div>
@@ -86,7 +100,7 @@
       </div>
 
       <div class="form-section price-section">
-        <div class="section-heading"><span class="step-number">3</span><h2>Price per basket?</h2></div>
+        <div class="section-heading"><span class="step-number">3</span><h2>Price per <span id="price-unit">basket</span>?</h2></div>
         <div class="price-row">
           <label class="price-input-wrap" for="price-input"><span class="naira-prefix">₦</span><input id="price-input" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" value="5000" aria-label="Price per basket in naira"></label>
           <div class="quick-prices" role="group" aria-label="Quick prices"><button type="button" data-price="3000">₦3k</button><button type="button" data-price="5000" class="is-active" aria-pressed="true">₦5k</button><button type="button" data-price="8000">₦8k</button></div>
@@ -170,6 +184,15 @@
         <article class="trust-item"><span class="trust-icon" aria-hidden="true">◉</span><p>Made with clay + sand + water</p></article>
         <article class="trust-item"><span class="trust-icon" aria-hidden="true">🧱</span><p>Built in 1 day by local mason</p></article>
       </div>
+    </section>
+
+    <section class="mason-section" aria-labelledby="mason-title">
+      <p class="eyebrow">LOCAL HELP NEAR YOU</p>
+      <h2 id="mason-title">Who go build am for your area?</h2>
+      <p class="mason-location">Contacts for <strong id="contact-location">Epe</strong></p>
+      <div id="mason-contact-list" class="mason-contact-list" aria-live="polite"></div>
+      <p class="mason-note">Na local mason, no be company. Call am direct.</p>
+      <p class="mason-data-note">Example names are not verified contacts. Add verified phone numbers in <code>LOCAL_CONTACTS</code> in app.js to activate Call buttons.</p>
     </section>
 
     <section class="cta-section" aria-label="Get the cooler building guide">
