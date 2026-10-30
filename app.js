@@ -14,7 +14,7 @@
     { produce: 'Efo', price: 3500, yesterday: 4000 }
   ];
   const LOCAL_CONTACTS = [
-    { area: 'Epe', name: 'Mason listing pending', role: 'Mason', detail: 'Add a verified contact in app.js', phone: '' },
+    { area: 'Epe', name: 'Epe Mason', role: 'Mason', detail: 'Local mason contact', phone: '08137197050' },
     { area: 'Epe', name: 'Ekemini Enang', role: 'Materials', detail: 'Materials contact', phone: '08063353863' },
     { area: 'Ikorodu', name: 'Mason listing pending', whatsappName: 'local mason', role: 'Mason', detail: 'Add a verified contact in app.js', phone: '' },
     { area: 'Ikorodu', name: 'Materials listing pending', whatsappName: 'local materials seller', role: 'Materials', detail: 'Add a verified contact in app.js', phone: '' },
