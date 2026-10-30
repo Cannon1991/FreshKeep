@@ -216,3 +216,80 @@ svg { display: block; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+
+/* Revised farmer-first sections */
+.site-header { background: var(--sun); color: var(--forest-dark); border-bottom: 5px solid var(--leaf); }
+.brand { color: var(--forest-dark); }
+.brand-mark { background: var(--forest); color: var(--sun); }
+.brand-mark svg path:last-child { stroke: var(--sun) !important; }
+.brand-name span { color: #3d5b2a; }
+.language-switch { border-color: rgba(25,76,45,.45); }
+.language-switch button { color: var(--forest-dark); }
+.language-switch button[aria-pressed="true"] { background: var(--forest); color: #fff; }
+.header-promise { margin-bottom: 2px; color: var(--forest-dark); }
+.header-subtitle { margin: 0 0 12px; color: #3d5b2a; font-size: 18px; font-weight: 700; }
+.location-lead { color: #3d5b2a; }
+.location-pill { border-color: #587b42; color: var(--forest-dark); }
+.location-pill.is-active { background: var(--leaf); border-color: var(--leaf); color: #fff; }
+.produce-card { padding-bottom: 10px; }
+.produce-days { display: block; padding: 6px 8px 0; color: var(--muted); font-size: 18px; line-height: 1.25; }
+.produce-days b { color: var(--forest-dark); }
+.cost-section, .steps-section, .days-checker { margin: 18px 1px 0; padding: 18px 15px; border: 1px solid #dedfce; border-radius: 22px; background: var(--paper); box-shadow: var(--shadow); }
+.cost-section h2, .steps-section h2, .days-checker h2 { margin: 0 0 12px; color: var(--forest-dark); font-size: 23px; line-height: 1.25; letter-spacing: -.4px; }
+.cost-section h2 span { display: block; color: var(--leaf); }
+.cost-list { display: grid; gap: 5px; margin: 0; padding: 0; list-style: none; }
+.cost-list li { display: grid; grid-template-columns: 32px 1fr auto; align-items: center; gap: 8px; min-height: 48px; padding: 5px 8px; border-bottom: 1px solid var(--line); font-size: 18px; }
+.cost-list strong { color: var(--forest-dark); font-size: 18px; white-space: nowrap; }
+.cost-icon { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; background: var(--sun-soft); color: var(--forest); }
+.cost-savings { margin-top: 12px; padding: 12px; border-radius: 14px; background: #edf5dc; color: var(--forest-dark); }
+.cost-savings p { margin: 0; font-size: 18px; line-height: 1.35; }
+.cost-savings p:first-child strong { color: var(--leaf); font-size: 21px; }
+.cost-cover-status { margin-top: 4px !important; font-weight: 750; }
+.no-power-line { margin: 13px 0 0; padding: 12px; border-radius: 13px; background: #fff2bd; color: var(--forest-dark); font-size: 18px; font-weight: 800; }
+.no-power-line span { margin-right: 5px; color: #a27d0b; }
+.steps-section { background: #f0f3e4; }
+.steps-list { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.step-card { overflow: hidden; border: 1px solid #d9dfca; border-radius: 16px; background: #fff; }
+.step-photo { position: relative; display: block; height: 185px; overflow: hidden; background: #e6e2d5; }
+.step-photo img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.step-card:nth-child(1) .step-photo img { object-position: center 54%; }
+.step-card:nth-child(2) .step-photo img { object-position: center 50%; }
+.step-card:nth-child(3) .step-photo img { object-position: center 53%; }
+.step-badge { position: absolute; top: 10px; left: 10px; display: grid; place-items: center; width: 38px; height: 38px; border: 2px solid #fff; border-radius: 50%; background: var(--sun); color: var(--forest-dark); font-size: 20px; font-weight: 900; }
+.step-card p { margin: 0; padding: 11px 12px 13px; color: var(--forest-dark); font-size: 18px; line-height: 1.35; font-weight: 700; }
+.temperature-caption { margin: 12px 0 0; padding: 11px; border-radius: 12px; background: #e2eed0; color: var(--forest-dark); font-size: 18px; font-weight: 750; text-align: center; }
+.temperature-caption span { color: #368b89; }
+.days-checker { border: 2px solid #d6e3b9; }
+.checker-hint { margin: -2px 0 9px; color: var(--muted); font-size: 18px; }
+.checker-produce { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.checker-produce-button { display: flex; align-items: center; gap: 8px; min-width: 0; min-height: 54px; padding: 4px; border: 2px solid var(--line); border-radius: 12px; background: #fff; color: var(--forest-dark); font-size: 18px; font-weight: 750; text-align: left; }
+.checker-produce-button.is-selected { border-color: var(--leaf); box-shadow: 0 0 0 2px #e1edc7; }
+.checker-produce-button img { width: 48px; height: 44px; flex: 0 0 auto; border-radius: 8px; object-fit: cover; }
+.days-control { margin-top: 16px; }
+.days-control label { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 10px; font-size: 18px; font-weight: 700; }
+.days-control label strong { color: var(--leaf); }
+#days-ago { display: block; width: 100%; height: 38px; margin-top: 8px; accent-color: var(--leaf); }
+.days-left-output { margin: 14px 0 0; padding: 14px; border-radius: 14px; background: #eaf3d9; color: var(--forest-dark); font-size: 20px; line-height: 1.4; }
+.days-left-output strong { color: var(--leaf); }
+.days-warning { margin: 14px 0 0; padding: 14px; border: 1px solid var(--red-line); border-radius: 14px; background: var(--red-bg); color: var(--red); font-size: 22px; font-weight: 900; }
+.remind-button { width: 100%; min-height: 50px; margin-top: 12px; padding: 9px 12px; border: 2px solid var(--forest); border-radius: 13px; background: #fff; color: var(--forest); font-size: 18px; font-weight: 800; }
+.reminder-status { margin: 8px 0 0; color: var(--muted); font-size: 18px; line-height: 1.35; }
+.reminder-status:empty { display: none; }
+@media (min-width: 560px) {
+  .cost-section, .steps-section, .days-checker { padding: 21px 20px; }
+  .cost-section h2 span { display: inline; }
+  .steps-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .step-photo { height: 148px; }
+  .checker-produce { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .checker-produce-button { flex-direction: column; justify-content: center; text-align: center; }
+  .checker-produce-button img { width: 100%; height: 74px; }
+}
+@media (min-width: 720px) {
+  .step-photo { height: 175px; }
+}
+@media (max-width: 350px) {
+  .topline { flex-wrap: wrap; }
+  .language-switch { margin-left: auto; }
+  .cost-list li { grid-template-columns: 28px 1fr auto; gap: 5px; padding-inline: 4px; }
+}
